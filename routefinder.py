@@ -1,6 +1,7 @@
+from os.path import split
 from queue import PriorityQueue
 
-from Graph import Graph
+from Graph import Graph, Edge, Node
 
 
 class map_state() :
@@ -49,10 +50,23 @@ def h1(state) :
 ## you do this - return the straight-line distance between the state and (1,1)
 def sld(state) :
     # sqt(a^ + b2)
+    print("state.location: ", state.location)
+    pass
 
 ## you implement this. Open the file filename, read in each line,
 ## construct a Graph object and assign it to self.mars_graph().
 def read_mars_graph(filename):
+    # once we have the number of nodes, add that here
     graph = Graph()
     with open(filename) as f:
+        for line in f.readlines():
+            content = line.split()
+            content[0] = content[0].strip(":")
+            n = Node(content[0])
+            graph.add_node(n)
+            for edge in content[1:]:
+                e = Edge(n, edge)
+                print("e: ", e)
+                graph.add_edge(e)
 
+    return graph

@@ -75,7 +75,7 @@ def move_to_battery(state) :
 
 def pick_up_sample(state) :
     r2 = deepcopy(state)
-    if state.sample_extracted and state.loc == "sample":
+    if state.sample_extracted and state.loc == "sample" and state.holding_tool:
         r2.holding_sample = True
     r2.prev = state
     return r2
@@ -140,7 +140,11 @@ def mission_complete(state) :
 
 if __name__=="__main__" :
     s = RoverState()
-    result = breadth_first_search(s, action_list, mission_complete)
+    result = breadth_first_search(s, action_list, sample_goal)
+    print(result)
+    result = breadth_first_search(s, action_list, holding_sample_goal)
+    print(result)
+    result = breadth_first_search(s, action_list, battery_goal)
     print(result)
 
 
