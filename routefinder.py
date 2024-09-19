@@ -42,38 +42,33 @@ def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
     search_queue = PriorityQueue()
     closed_list = {}
     search_queue.put((start_state.f, start_state))
-    print("search queue: ", search_queue.queue)
+    # print("search queue: ", search_queue.queue)
     mars_graph = start_state.mars_graph
+    states_generated = 0
 
     # if use_closed_list:
     closed_list[start_state] = True
     while search_queue.qsize() > 0 :
         next_state = search_queue.get()
-        print("next state: ", next_state[1])
+        # print("next state: ", next_state[1])
         if goal_test(next_state[1]):
-            print("Goal found")
             print(next_state[1])
-            ptr = next_state[1]
-            while ptr is not None :
-                ptr = ptr.prev
-                print(ptr)
+            print("states_generated: ", states_generated)
+            print("Goal found in ", next_state[0], " steps.")
             return next_state[1]
         else :
             edges = mars_graph.get_edges(next_state[1].location)
-            # print("edges: ", edges)
-            # print("edges: ", str(edges[0]).split())
             for e in edges :
-                g = next_state[1].g
+                g = next_state[1].g + 1
                 h = sld(e.dest)
                 m = map_state(location=e.dest, mars_graph="MarsMap", prev_state=next_state[1], g=g, h=h)
                 f = g + h
+                # print("f: ", f, " g: ", g, " h: ", h)
                 if m not in closed_list :
                     search_queue.put((f, m))
-            # print("e: ", e)
-            # search_queue.put((sld(e), e))
-            # print("search queue after adding: ", search_queue.queue)
+                    closed_list[m] = True
+                states_generated += 1
 
-    ## you do the rest.
 
 
 ## default heuristic - we can use this to implement uniform cost search
@@ -82,7 +77,7 @@ def h1(state) :
 
 ## you do this - return the straight-line distance between the state and (1,1)
 def sld(state) :
-    print("state: ", state)
+    # print("state: ", state)
     coordinates = state.split(",")
     return math.sqrt(pow(int(coordinates[0]) - 1, 2) + pow(int(coordinates[1]) - 1, 2))
 
@@ -104,7 +99,7 @@ def read_mars_graph(filename):
     return graph
 
 def g(s):
-    print("s: ", s)
+    # print("s: ", s)
     return s.location == "1,1"
 
 if __name__=="__main__" :
