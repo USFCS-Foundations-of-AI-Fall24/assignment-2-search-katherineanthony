@@ -1,3 +1,12 @@
-from routefinder import read_mars_graph
+from routefinder import read_mars_graph, sld, a_star
 
-read_mars_graph("/Users/katherineanthony/PycharmProjects/assignment-2-search-katherineanthony/MarsMap")
+if __name__=="__main__" :
+
+
+    ## route finder:
+
+    graph = read_mars_graph("MarsMap")
+
+    a_star(graph)
+
+

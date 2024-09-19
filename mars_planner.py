@@ -140,12 +140,12 @@ def mission_complete(state) :
 
 if __name__=="__main__" :
     s = RoverState()
-    result = breadth_first_search(s, action_list, sample_goal)
-    print(result)
-    result = breadth_first_search(s, action_list, holding_sample_goal)
-    print(result)
-    result = breadth_first_search(s, action_list, battery_goal)
-    print(result)
+    result = breadth_first_search(s, action_list, mission_complete)
+    # print(result)
+    # result = breadth_first_search(s, action_list, holding_sample_goal)
+    # print(result)
+    # result = breadth_first_search(s, action_list, battery_goal)
+    # print(result)
 
 
 

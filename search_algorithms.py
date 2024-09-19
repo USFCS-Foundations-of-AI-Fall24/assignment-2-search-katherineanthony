@@ -21,7 +21,7 @@ def breadth_first_search(startState, action_list, goal_test, use_closed_list=Tru
             while ptr is not None :
                 ptr = ptr.prev
                 print(ptr)
-            print("BFS states generated: ", states_generated)
+            # print("BFS states generated: ", states_generated)
             return next_state
         else :
             successors = next_state[0].successors(action_list)
