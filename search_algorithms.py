@@ -21,7 +21,7 @@ def breadth_first_search(startState, action_list, goal_test, use_closed_list=Tru
             while ptr is not None :
                 ptr = ptr.prev
                 print(ptr)
-            # print("BFS states generated: ", states_generated)
+            print("BFS states generated: ", states_generated)
             return next_state
         else :
             successors = next_state[0].successors(action_list)
@@ -30,7 +30,7 @@ def breadth_first_search(startState, action_list, goal_test, use_closed_list=Tru
                                     if item[0] not in closed_list]
                 for s in successors :
                     closed_list[s[0]] = True
-            states_generated += len(successors)
+                    states_generated += 1
             search_queue.extend(successors)
 
 ### Note the similarity to BFS - the only difference is the search queue
@@ -63,6 +63,6 @@ def depth_first_search(startState, action_list, goal_test, use_closed_list=True,
                                     if item[0] not in closed_list]
                 for s in successors :
                     closed_list[s[0]] = True
-            states_generated += len(successors)
+                    states_generated += 1
             search_queue.extend(successors)
 

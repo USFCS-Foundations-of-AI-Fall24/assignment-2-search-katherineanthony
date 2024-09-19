@@ -27,7 +27,9 @@ class RoverState :
 
     ## eq function
     def __eq__(self, other):
-        if self.loc == other.loc and self.sample_extracted == other.sample_extracted and self.holding_sample == other.holding_sample and self.charged == other.charged:
+        if (self.loc == other.loc and self.sample_extracted == other.sample_extracted
+                and self.holding_sample == other.holding_sample and self.charged == other.charged
+                and self.holding_tool == other.holding_tool):
             return True
         return False
 
@@ -108,7 +110,10 @@ def drop_tool(state) :
 
 def use_tool(state) :
     r2 = deepcopy(state)
-    r2.sample_extracted = True
+    if state.holding_tool and r2.loc == "sample":
+        r2.sample_extracted = True
+    else :
+        r2.sample_extracted = False
     r2.prev = state
     return r2
 
@@ -141,7 +146,7 @@ def mission_complete(state) :
 if __name__=="__main__" :
     s = RoverState()
     result = breadth_first_search(s, action_list, mission_complete)
-    # print(result)
+    print(result)
     # result = breadth_first_search(s, action_list, holding_sample_goal)
     # print(result)
     # result = breadth_first_search(s, action_list, battery_goal)
