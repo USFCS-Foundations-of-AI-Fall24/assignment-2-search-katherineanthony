@@ -17,7 +17,7 @@ def breadth_first_search(startState, action_list, goal_test, use_closed_list=Tru
         if goal_test(next_state[0]):
             print("Goal found")
             print(next_state)
-            ptr = next_state[0]
+            # ptr = next_state[0]
             # while ptr is not None :
             #     ptr = ptr.prev
             #     print(ptr)
@@ -51,7 +51,7 @@ def depth_first_search(startState, action_list, goal_test, use_closed_list=True,
         if goal_test(next_state[0]):
             print("Goal found")
             print(next_state)
-            ptr = next_state[0]
+            # ptr = next_state[0]
             # while ptr is not None :
             #     ptr = ptr.prev
             #     print(ptr)

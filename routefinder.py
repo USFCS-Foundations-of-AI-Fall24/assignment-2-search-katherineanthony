@@ -1,9 +1,7 @@
 import math
-from os.path import split
 from queue import PriorityQueue
 
-from Graph import Graph, Edge, Node
-from mars_planner import RoverState, action_list, mission_complete
+from Graph import Graph, Edge
 
 
 class map_state() :
@@ -41,7 +39,6 @@ def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
     search_queue = PriorityQueue()
     closed_list = {}
     search_queue.put((start_state.f, start_state))
-    # print("search queue: ", search_queue.queue)
     mars_graph = start_state.mars_graph
     states_generated = 0
 
@@ -60,7 +57,6 @@ def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
                 h = heuristic_fn(e.dest)
                 m = map_state(location=e.dest, prev_state=next_state[1], g=g, h=h)
                 f = g + h
-                # print("f: ", f, " g: ", g, " h: ", h)
                 if m not in closed_list :
                     search_queue.put((f, m))
                     closed_list[m] = True
@@ -74,7 +70,6 @@ def h1(state) :
 
 ## you do this - return the straight-line distance between the state and (1,1)
 def sld(state) :
-    # print("state: ", state)
     coordinates = ""
     try :
         coordinates = state.split(",")
@@ -94,7 +89,6 @@ def read_mars_graph(filename):
             graph.add_node(content[0])
             for edge in content[1:]:
                 e = Edge(content[0], edge)
-                # print("e: ", e)
                 graph.add_edge(e)
 
     return graph

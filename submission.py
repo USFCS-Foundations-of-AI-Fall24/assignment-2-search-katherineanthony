@@ -1,6 +1,5 @@
 import routefinder
 from mars_planner import RoverState, action_list, mission_complete
-from routefinder import *
 from search_algorithms import *
 from antennae import antennae_main
 
