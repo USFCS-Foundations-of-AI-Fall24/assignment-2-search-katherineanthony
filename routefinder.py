@@ -10,10 +10,9 @@ class map_state() :
     ## f = total estimated cost
     ## g = cost so far
     ## h = estimated cost to goal
-    def __init__(self, location="", mars_graph=None,
-                 prev_state=None, g=0,h=0):
+    def __init__(self, location="", prev_state=None, g=0,h=0):
         self.location = location
-        self.mars_graph = read_mars_graph(mars_graph)
+        self.mars_graph = read_mars_graph("MarsMap")
         self.prev_state = prev_state
         self.g = g
         self.h = h
@@ -46,28 +45,26 @@ def a_star(start_state, heuristic_fn, goal_test, use_closed_list=True) :
     mars_graph = start_state.mars_graph
     states_generated = 0
 
-    # if use_closed_list:
     closed_list[start_state] = True
     while search_queue.qsize() > 0 :
         next_state = search_queue.get()
-        # print("next state: ", next_state[1])
         if goal_test(next_state[1]):
             print(next_state[1])
             print("states_generated: ", states_generated)
-            print("Goal found in ", next_state[0], " steps.")
+            print("Goal found with f:", next_state[0])
             return next_state[1]
         else :
             edges = mars_graph.get_edges(next_state[1].location)
             for e in edges :
                 g = next_state[1].g + 1
-                h = sld(e.dest)
-                m = map_state(location=e.dest, mars_graph="MarsMap", prev_state=next_state[1], g=g, h=h)
+                h = heuristic_fn(e.dest)
+                m = map_state(location=e.dest, prev_state=next_state[1], g=g, h=h)
                 f = g + h
                 # print("f: ", f, " g: ", g, " h: ", h)
                 if m not in closed_list :
                     search_queue.put((f, m))
                     closed_list[m] = True
-                states_generated += 1
+                    states_generated += 1
 
 
 
@@ -78,7 +75,11 @@ def h1(state) :
 ## you do this - return the straight-line distance between the state and (1,1)
 def sld(state) :
     # print("state: ", state)
-    coordinates = state.split(",")
+    coordinates = ""
+    try :
+        coordinates = state.split(",")
+    except:
+        coordinates = state.location.split(",")
     return math.sqrt(pow(int(coordinates[0]) - 1, 2) + pow(int(coordinates[1]) - 1, 2))
 
 ## you implement this. Open the file filename, read in each line,
@@ -99,11 +100,16 @@ def read_mars_graph(filename):
     return graph
 
 def g(s):
-    # print("s: ", s)
     return s.location == "1,1"
 
-if __name__=="__main__" :
-    map = map_state(location="8,8", mars_graph="MarsMap")
+def main():
+    map = map_state(location="4,4")
+    print("testing heuristic function...")
+    a_star(map, h1, g)
+
+    print("------------------")
+
+    print("testing SLD function...")
     a_star(map, sld, g)
 
 

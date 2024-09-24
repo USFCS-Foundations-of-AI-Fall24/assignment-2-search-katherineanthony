@@ -40,17 +40,18 @@ model.Add(Antenna7 != Antenna8)
 
 model.Add(Antenna8 != Antenna9)
 
-status = solver.Solve(model)
+def antennae_main():
+    status = solver.Solve(model)
 
-if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
-    print("Antenna 1: %s" % frequencies[solver.Value(Antenna1)])
-    print("Antenna 2: %s" % frequencies[solver.Value(Antenna2)])
-    print("Antenna 3: %s" % frequencies[solver.Value(Antenna3)])
-    print("Antenna 4: %s" % frequencies[solver.Value(Antenna4)])
-    print("Antenna 5: %s" % frequencies[solver.Value(Antenna5)])
-    print("Antenna 6: %s" % frequencies[solver.Value(Antenna6)])
-    print("Antenna 7: %s" % frequencies[solver.Value(Antenna7)])
-    print("Antenna 8: %s" % frequencies[solver.Value(Antenna8)])
-    print("Antenna 9: %s" % frequencies[solver.Value(Antenna9)])
+    if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
+        print("Antenna 1: %s" % frequencies[solver.Value(Antenna1)])
+        print("Antenna 2: %s" % frequencies[solver.Value(Antenna2)])
+        print("Antenna 3: %s" % frequencies[solver.Value(Antenna3)])
+        print("Antenna 4: %s" % frequencies[solver.Value(Antenna4)])
+        print("Antenna 5: %s" % frequencies[solver.Value(Antenna5)])
+        print("Antenna 6: %s" % frequencies[solver.Value(Antenna6)])
+        print("Antenna 7: %s" % frequencies[solver.Value(Antenna7)])
+        print("Antenna 8: %s" % frequencies[solver.Value(Antenna8)])
+        print("Antenna 9: %s" % frequencies[solver.Value(Antenna9)])
 
 
